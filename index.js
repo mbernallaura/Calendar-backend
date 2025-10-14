@@ -10,19 +10,22 @@ require('dotenv').config();
 //? Crear el servidor de express
 const app = express();
 
+
 //?Directorio Publico
-//! .use() = es un midelware que es una funcion que se ejecuta siempre que pasa en algun lugar, cuando alguien haga una peticion
+//! .use() = es un midelware que es una funcion que se ejecuta antes de otra cosa, ejm: cuando alguien haga una peticion
 app.use( express.static('public') ); 
+
+
+//? Lectura y parseo del body
+//! Las peticiones  que vengan en formato JSON se procesan y se extrae el contenido
+app.use( express.json() );
+
 
 //?Rutas
 //! Todo el archivo ./routes/auth que esta en require va a ser exportado y lo habilitara en la ruta /api/auth
 app.use('/api/auth', require('./routes/auth'));
 //TODO: auth, crear, login, renew, crud de ventos
-// app.get('/', (req, res)=>{
-//     res.json({
-//         ok: true
-//     })
-// });
+
 
 //?Escuchar peticiones
 // app.listen(4000, ()=>{
