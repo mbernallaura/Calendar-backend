@@ -1,6 +1,8 @@
 //! Haciendo Backend server
 //?Configurando express
 const express = require('express');
+//bd import
+const { dbConnection } = require('./database/config');
 
 //?Configurar .env
 require('dotenv').config();
@@ -9,6 +11,9 @@ require('dotenv').config();
 
 //? Crear el servidor de express
 const app = express();
+dbConnection();
+
+//? Base de datos
 
 
 //?Directorio Publico
