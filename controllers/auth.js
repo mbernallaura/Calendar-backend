@@ -10,6 +10,7 @@ se hace esto es para obtener la ayuda(intelliSense) al hacer el request y el res
 const { response } = require("express");
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
+const { generarJWT } = require('../helpers/jwt');
 
 
 const crearUsuario = async (req, res = response)=>{
@@ -27,21 +28,25 @@ const crearUsuario = async (req, res = response)=>{
         //recolecta info que se manda del body
         usuario = new Usuario(req.body);
 
-        //? Encriptar contraseña
+        // Encriptar contraseña
         //! salt = se genera numeros o letras al azar para poder encripar la contraseña
         //! .genSaltSync() = por defecto trae de largo 10, entre mas grande sea el numero 
         //! mas compleja y segura sera la contraseña pero va a tardar mas en hacer el hash
         const salt = bcrypt.genSaltSync();
         usuario.password = bcrypt.hashSync( password, salt );
 
-        //? Guardar en base de datos
+        // Guardar en base de datos
         //! .save() es una promesa y va guardar los datos o mandara un error
         await usuario.save();
+
+        // Generar JWT
+        const token = generarJWT( usuario.id, usuario.name );
 
         res.status(201).json({
             ok: true,
             uid: usuario.id,
-            name: usuario.name
+            name: usuario.name,
+            token
         })
     } catch (error) {
         res.status(500).json({
@@ -93,10 +98,17 @@ const loginUsuario = async (req, res = response)=>{
             });
         }
 
+        //Generar JWT(Json Web Token) = manejan el estado de la sesion del usuario de forma pasiva
+        //! JWB tiene 3 partes: Header= que tipo de algoritmo y token necesita para la encriptacion
+        //! payload= info que se graba en el token(No colocar info sensible)
+        //! signature(firma)= se manda una palabra secreta y si el token no tiene esa firma entonces este token no es valido, se da una fecha de expiracion
+        const token = generarJWT( usuario.id, usuario.name );
+
         res.json({
             ok: false,
             uid: usuario.id,
-            name: usuario.name
+            name: usuario.name,
+            token
         });
 
     } catch (error) {
