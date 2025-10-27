@@ -36,7 +36,7 @@ router.post('/new',
     ],
     crearUsuario
 );
-
+//host + api/auth/
 router.post('/',
     [
         check('email', 'El email es obligatorio').isEmail(),
@@ -46,6 +46,7 @@ router.post('/',
     loginUsuario
 );
 
+//host + api/auth/renew
 //! Si solo es un middleware se coloca de la siguiente 
 //! manera de lo contrario como se venia colocando 
 router.get('/renew', validarJWT,revalidarToken);

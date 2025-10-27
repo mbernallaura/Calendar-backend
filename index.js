@@ -31,8 +31,9 @@ app.use( express.json() );
 
 // Rutas
 //! Todo el archivo ./routes/auth que esta en require va a ser exportado y lo habilitara en la ruta /api/auth
-app.use('/api/auth', require('./routes/auth'));
 //TODO: auth, crear, login, renew, crud de ventos
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/events', require('./routes/events'));
 
 
 // Escuchar peticiones
