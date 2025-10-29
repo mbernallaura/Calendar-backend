@@ -20,7 +20,7 @@ router.get('/events', getEventos);
 
 //Crear un nuevo evento
 // host + /api/events/new
- router.post('/new', 
+router.post('/new', 
     [
         check('title', 'El titulo es obligatorio').not().isEmpty(),
         check('start', 'Fecha de inicio es obligatoria').custom( isDate ),
