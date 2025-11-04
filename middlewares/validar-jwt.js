@@ -1,6 +1,8 @@
 const { response } = require('express');
 const jwt = require("jsonwebtoken");
 
+//!Se valida el token y si es valido manda el id y el name del usuario de forma segura para los otros middlewares 
+
 const validarJWT = (req, res = response, next) =>{
     // x-token headers
     const token = req.header('x-token')

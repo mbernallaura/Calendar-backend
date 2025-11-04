@@ -15,8 +15,8 @@ const router = Router();
 router.use(validarJWT);
 
 //Obtener evento
-// host + /api/events/events
-router.get('/events', getEventos);
+// host + /api/events/
+router.get('/', getEventos);
 
 //Crear un nuevo evento
 // host + /api/events/new
