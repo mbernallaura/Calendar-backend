@@ -105,7 +105,7 @@ const loginUsuario = async (req, res = response)=>{
         const token = generarJWT( usuario.id, usuario.name );
 
         res.json({
-            ok: false,
+            ok: true,
             uid: usuario.id,
             name: usuario.name,
             token
@@ -126,6 +126,8 @@ const revalidarToken = async (req, res = response)=>{
 
     res.json({
         ok: true,
+        uid,
+        name,
         token
     })
 }
