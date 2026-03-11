@@ -1,5 +1,6 @@
 //! Haciendo Backend server
 // Configurando express
+const path =require('path');
 const express = require('express');
 //bd import
 const { dbConnection } = require('./database/config');
@@ -34,6 +35,12 @@ app.use( express.json() );
 //TODO: auth, crear, login, renew, crud de ventos
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
+
+//!Cualquier peticion que no sea las dos anterior lo llevara al contenido que se tiene en el index,
+//!en este caso el frontend que se creo para este backend
+app.use('*', (req, res) =>{
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+})
 
 
 // Escuchar peticiones
